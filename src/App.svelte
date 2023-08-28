@@ -1,5 +1,5 @@
 <script>
-  import { register } from '@tauri-apps/api/globalShortcut';
+  import { register, registerAll } from '@tauri-apps/api/globalShortcut';
   import { invoke } from "@tauri-apps/api/tauri";
   import Card from './lib/Card.svelte';
   import user from './assets/user.svg';
@@ -36,11 +36,10 @@
   }
 
   async function register_shortcuts() {
-    await register('ArrowLeft', () => {if(selection) selection--; interaction = true});
-    await register('ArrowRight', () => {if(selection < 4) selection++; interaction = true});
     await register('Enter', () => on_exit(actions[selection]));
-    await register('Escape', () => on_exit(""));
-    await register('Q', () => on_exit(""));
+    await registerAll(['ArrowLeft', 'H'], () => {if(selection) selection--; interaction = true});
+    await registerAll(['ArrowRight', 'L'], () => {if(selection < 4) selection++; interaction = true});
+    await registerAll(['Escape', 'Q'], () => on_exit(""));
   }
 </script>
 
